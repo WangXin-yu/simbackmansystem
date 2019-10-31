@@ -4,8 +4,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="1"
-        :page-sizes="page_sizes_arr"
-        :page-size="pageSize"
+        :page-sizes="[4, 8, 16, 24]"
+        :page-size="50"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total_pages">
     </el-pagination>
@@ -21,14 +21,6 @@
       total_pages:{
         type:Number,
         default: 50,
-      },
-      page_sizes_arr:{
-        type:Array,
-        default: ()=>{},
-      },
-      pageSize:{
-        type: Number,
-        default: 10,
       }
     },
     data() {

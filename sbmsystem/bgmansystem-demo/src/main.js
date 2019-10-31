@@ -7,11 +7,20 @@ import http from './http'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VCharts from 'v-charts';
+import dayjs from 'dayjs'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+import lodash from "lodash";
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
 Vue.config.productionTip = false;
 Vue.prototype.$axios = http
+Vue.prototype.$dayjs = dayjs
+Vue.prototype.$lodash = lodash
+
 Vue.use(ElementUI);
 Vue.use(VCharts);
-
+Vue.use(mavonEditor);
 import Router from 'vue-router'
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {

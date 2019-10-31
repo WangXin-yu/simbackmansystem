@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="header">
-      <div>欢迎**来到**后台管理系统</div>
-      <div>下午好,亲爱的** 上次登录时间：2019年10月23日17时44分15秒</div>
+      <div>欢迎{{username}}来到{{username}}后台管理系统</div>
+      <div>
+        <span>{{sayhi}}</span>,
+        亲爱的{{username}} 上次登录时间：2019年10月23日17时44分15秒</div>
     </div>
     <div class="content-box">
       <div>
@@ -12,40 +14,42 @@
               background-color="#344055"
               text-color="#fff"
               active-text-color="#ffd04b"
-              default-active="1">
-            <el-menu-item index="1" @click="goToHomePage">
+              :default-active="$route.path"
+              router
+              >
+            <el-menu-item index="/home-page" @click="goToHomePage">
               <i class="el-icon-location-outline" ></i>
               <span slot="title">首页</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="goToPagingForm">
+            <el-menu-item index="/paging-form" @click="goToPagingForm">
               <i class="el-icon-menu"></i>
               <span slot="title">分页表格</span>
             </el-menu-item>
-            <el-menu-item index="3" @click="goToTabPage">
+            <el-menu-item index="/tab-page" @click="goToTabPage">
               <i class="el-icon-document"></i>
               <span slot="title">标签页</span>
             </el-menu-item>
-            <el-menu-item index="4" @click="goToPicturUpload">
+            <el-menu-item index="/picture-upload" @click="goToPicturUpload">
               <i class="el-icon-check"></i>
               <span slot="title">图片上传</span>
             </el-menu-item>
-            <el-menu-item index="5" @click="goToPublished">
+            <el-menu-item index="/published" @click="goToPublished">
               <i class="el-icon-lock"></i>
               <span slot="title">已发表</span>
             </el-menu-item>
-            <el-menu-item index="6" @click="goToPublishArticle">
+            <el-menu-item index="/publish-article" @click="goToPublishArticle">
               <i class="el-icon-message"></i>
               <span slot="title">发布文章</span>
             </el-menu-item>
-            <el-menu-item index="7" @click="goToStatistics">
+            <el-menu-item index="/statistics" @click="goToStatistics">
               <i class="el-icon-setting"></i>
               <span slot="title">统计</span>
             </el-menu-item>
-            <el-menu-item index="8" @click="goToExportExcel">
+            <el-menu-item index="/export-excel" @click="goToExportExcel">
               <i class="el-icon-setting"></i>
               <span slot="title">导出excel</span>
             </el-menu-item>
-            <el-menu-item index="9" @click="goToExit">
+            <el-menu-item index="/exit" @click="goToExit">
               <i class="el-icon-delete"></i>
               <span slot="title">退出系统</span>
             </el-menu-item>
@@ -68,6 +72,8 @@
     props: {},
     data() {
       return {
+        username:'',
+        sayhi: '',
         dataArray:[],
         active_index:1,
       }
@@ -107,12 +113,39 @@
       },
       goToExit(){
         this.$router.push("/exit");
+      },
+      initArticle(){
+        this.$store.state.article = this.init_article_datas;
+      },
+      SayHello(){
+        let date = (new Date()).getHours();
+        if(date < 11 && date > 6) {
+          this.sayhi = "上午好"
+        }else if(date < 14){
+          this.sayhi = "中午好"
+        }else if(date < 17){
+          this.sayhi = "下午好"
+        }else if(date < 24){
+          this.sayhi = "晚上好"
+        }else{
+          this.sayhi = "该睡觉了"
+        }
       }
     },
 
     computed: {
+      onRoutes(){
+
+        let path = this.$route.path.replace('/','');
+
+        return path ? path : '/';
+
+      }
     },
     mounted() {
+      this.initArticle();
+      this.username = this.$store.state.userInfo.username;
+      this.SayHello();
     },
     created() {
 

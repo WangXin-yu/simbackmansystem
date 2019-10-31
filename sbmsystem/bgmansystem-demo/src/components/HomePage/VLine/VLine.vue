@@ -1,12 +1,9 @@
 <template>
-
-
   <el-card class="box-card">
     <div class="card-item">
       <ve-line :data="line_datas"></ve-line>
     </div>
   </el-card>
-
 </template>
 
 <script>

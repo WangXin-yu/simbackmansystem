@@ -20,7 +20,7 @@
     methods: {
       getHistogramData(){
         //处理得到数据对象，添加一个rows存键值的数组, 将data键值改为columns
-        this.$axios.req("api//homeChat").then(res=>{
+        this.$axios.req("api/homeChat").then(res=>{
           this.histogramData = res;
           let columns = Object.keys(this.histogramData.data[0]);   //添加rows存键值的数组
           this.histogramData.columns = columns;

@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/bg-frame",
     name: "bg-frame",
     component: () =>
       import("../views/BgFrame.vue")
@@ -110,11 +110,6 @@ const routes = [
     ]
   },
   {
-    path: "/exit",
-    name: "exit",
-    component:()=>import("../components/Exit/Exit.vue")
-  },
-  {
     path: "/test-paging",
     component: BgFrame,
     children:[
@@ -125,6 +120,49 @@ const routes = [
       }
     ]
   },
+  {
+    path:"/published-edit",
+    component: BgFrame,
+    children:[
+      {
+        path:"",
+        name:"published-edit",
+        component: ()=>import("../components/PublishedEdit/PublishedEdit.vue")
+      }
+    ]
+  },
+  {
+    path:"/check",
+    component: BgFrame,
+    children:[
+      {
+        path:"",
+        name:"check",
+        component: ()=>import("../components/Check/Check.vue")
+      }
+    ]
+  },
+  {
+    path:"/exit",
+    component: BgFrame,
+    children:[
+      {
+        path:"",
+        name:"exit",
+        component: ()=>import("../components/Exit/Exit.vue")
+      }
+    ]
+  },
+  {
+    path: "/",
+    name: "login",
+    component: ()=>import("../components/Login/Login.vue")
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: ()=>import("../components/Register/Register.vue")
+  }
 ];
 
 const router = new VueRouter({
@@ -132,5 +170,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-
+// let user = this.$store.state.userInfo.username;
+router.beforeEach((to, from, next) => {
+  let user = localStorage.getItem('username')
+  // let user = this.$store.state.userInfo.username;
+  if (to.path === '/' || to.path === '/register') {
+    next()
+  } else {
+    user? next() : next('/')
+  }
+})
 export default router;

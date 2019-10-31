@@ -5,7 +5,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    current_page: 1,
+    article_id: 1,
+    article:[],
+    userInfo:{username:'', password:''},
   },
   mutations: {},
   actions: {},
